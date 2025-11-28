@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Jewelry</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* quan trọng để padding không làm tràn */
+        }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            color: #111;
+        }
+
+        /* INTRO SCREEN */
+        #intro {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #intro video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #skipIntro {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            padding: 10px 20px;
+            background: #ffffffaa;
+            border: 1px solid #fff;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        #skipIntro:hover {
+            background: #f3d68b;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed; /* cố định khi scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.24); /* nền sáng để chữ nổi bật */
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+                /* Header khi scroll xuống */
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        header.scrolled .logo {
+            color: #bfa064;
+            text-shadow: none;
+        }
+
+        header.scrolled nav a,
+        header.scrolled nav i {
+            color: #111;
+        }
+        header.scrolled nav a:hover,
+        header.scrolled nav i:hover {
+            color: #bfa064;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff; /* trắng nổi bật trên ảnh */
+            letter-spacing: 3px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* tăng nổi bật */
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff; /* chữ trắng nổi trên hero */
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            padding: 6px 12px; /* thêm khoảng cách chữ và viền */
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #bfa064; /* vàng sang trọng khi hover */
+        }
+        nav i {
+            text-decoration: none;
+            color: #ffffff; /* chữ trắng nổi trên hero */
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            padding: 6px 12px; /* thêm khoảng cách chữ và viền */
+            transition: 0.3s;
+        }
+
+        nav i:hover {
+            color: #bfa064; /* vàng sang trọng khi hover */
+}
+
+        /* ================= HERO IMAGE ================= */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 90vh;
+            background-image: url('hero.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4); /* overlay mờ */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative; /* để hiển thị trên overlay */
+            z-index: 2;
+            text-align: center;
+            color: white;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+        }
+
+
+        .hero-content h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            font-weight: 300;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            margin-top: 18px;
+            font-size: 18px;
+            max-width: 680px;
+            opacity: 0.9;
+        }
+
+        .hero-content button {
+            margin-top: 30px;
+            padding: 12px 28px;
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            backdrop-filter: blur(6px);
+            transition: 0.3s;
+        }
+
+        .hero-content button:hover {
+            background: #ffffffaa;
+            color: #000;
+        }
+
+
+        /* ================== NEW INTRO SECTION (2 COLUMN) ================== */
+        .intro-section {
+            padding: 100px 80px;
+            background: #ffffff;
+        }
+
+        .intro-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .intro-image {
+            position: relative;
+            flex: 1;
+        }
+
+        .intro-image img {
+            width: 100%;
+            max-width: 650px;
+            border-radius: 16px;
+            box-shadow: 0px 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .est-tag {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: #d9b44a;
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .intro-text {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        .intro-text h4 {
+            color: #bfa064;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .intro-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .intro-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .intro-link {
+            font-size: 18px;
+            color: #000;
+            text-decoration: none;
+            border-bottom: 2px solid #000;
+            padding-bottom: 4px;
+            transition: 0.3s;
+        }
+
+        .intro-link:hover {
+            color: #bfa064;
+            border-color: #bfa064;
+        }
+
+        
+
+        /* ================== COLLECTION VIDEO ================== */
+        .collection {
+            display: flex;
+            justify-content: center;
+            padding: 80px 60px;
+            gap: 40px;
+        }
+
+        .video-wrapper {
+            position: relative;
+        }
+
+        .video-wrapper video {
+            width: 370px;
+            height: 620px;
+            border-radius: 12px;
+        }
+
+        .sound-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #ffffffaa;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+        }
+        /* ================== NEW COLLECTION SECTION ================== */
+        .collection-new {
+            padding: 100px 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            background-color: #e8e2cf;
+        }
+
+        .collection-left {
+            flex: 1;
+        }
+
+        .video-frame {
+            position: relative;
+            width: 350px;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e8e2cf;
+            box-shadow: 0px 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .collection-right {
+            flex: 1;
+            max-width: 480px;
+        }
+
+        .collection-right h4 {
+            color: #bfa064;
+            letter-spacing: 3px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .collection-right h2 {
+            font-size: 46px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        .collection-right p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #000000;
+        }
+
+        .view-more {
+            font-size: 18px;
+            text-decoration: none;
+            padding-bottom: 5px;
+            color: #000000;
+            border-bottom: 2px solid #000;
+            transition: 0.3s;
+        }
+
+        .view-more:hover {
+            color: #bfa064;
+            border-color: #bfa064;
+        }
+        /* WEDDING */
+        /* Wedding Section */
+        .wedding-section {
+            width: 100%;
+            padding: 0;
+            margin: 60px 0;
+        }
+
+        .wedding-grid {
+            display: grid;
+            grid-template-columns: 4fr 1fr 1fr;
+            grid-template-rows: 280px 280px;
+            gap: 0;
+        }
+
+        /* ẢNH LỚN BÊN TRÁI */
+        .wedding-main {
+            position: relative;
+            grid-row: span 2;
+        }
+
+        .wedding-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .wedding-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.25);
+            padding: 40px 60px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .wedding-overlay h2 {
+            font-size: 48px;
+            font-weight: 500;
+        }
+
+        .wedding-overlay p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .btn-wedding {
+            padding: 12px 26px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        /* ẢNH PHỤ */
+        .wedding-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* KHUNG ĐẶT LỊCH */
+        .wedding-consult {
+            background: #252525;
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wedding-consult h3 {
+            font-size: 28px;
+            color: #f8c15d;
+        }
+
+        .wedding-consult p {
+            margin: 10px 0;
+            color: #ccc;
+        }
+
+        .wedding-consult a {
+            margin-top: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #fff;
+            width: fit-content;
+        }
+
+
+        /* SLIDER */
+        .product-section {
+            padding: 60px 60px 120px;
+            background: #e8e2cf;
+        }
+
+        .product-section h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #bfa064;
+            margin-bottom: 35px;
+        }
+
+        .slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 20px;
+        }
+
+        .slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .slider::-webkit-scrollbar-thumb {
+            background: #bfa064;
+            border-radius: 10px;
+        }
+
+        .product {
+            min-width: 260px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .view-all-btn {
+            display: block;
+            margin: 40px auto 0;
+            padding: 14px 32px;
+            font-size: 18px;
+            background: #bfa064;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .view-all-btn:hover {
+            background: #a58b54;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111;
+            color: #fff;
+            padding: 56px 8vw;
+            display:flex;
+            gap:36px;
+            flex-wrap:wrap;
+            justify-content:space-between;
+        }
+        .footer-col { flex: 1 1 200px; min-width:180px; }
+        footer h4 { color: #bfa064; margin:0 0 12px; font-size:16px; }
+        footer p, footer a { color: #d9d9d9; font-size:14px; text-decoration:none; display:flex; gap:10px; align-items:center; margin:8px 0; }
+        footer a:hover { color: #bfa064; transform: translateX(4px); }
+    </style>
+</head>
+
+<body>
+
+<!-- ==================== INTRO VIDEO ==================== -->
+<div id="intro">
+    <video autoplay muted id="introVideo">
+        <source src="intro.mp4" type="video/mp4">
+    </video>
+
+    <button id="skipIntro">Bỏ qua</button>
+    <!-- Nút bật/tắt âm thanh -->
+    <div class="sound-btn" id="introSoundBtn" style="position: absolute; top: 30px; left: 40px;">
+        <i class="fa-solid fa-volume-xmark"></i>
+    </div>
+</div>
+
+<!-- ==================== HEADER ==================== -->
+<header>
+    <div class="logo">AURORA</div>
+    <nav>
+        <a href="#">TRANG CHỦ</a>
+        <a href="#">BỘ SƯU TẬP</a>
+        <a href="#">SẢN PHẨM</a>
+        <a href="#">CƯỚI & ĐÍNH HÔN</a>
+        <a href="#">LIÊN HỆ</a>
+        <i href="#" class="fa-regular fa-user account-icon"></i>
+    </nav>
+</header>
+
+<!-- ==================== HERO IMAGE (THAY VIDEO) ==================== -->
+<div class="hero">
+    <div class="hero-content">
+        <h4>Bộ sưu tập Mùa Đông 2025</h4>
+        <h1>VẺ ĐẸP CỦA SỰ VĨNH CỬU</h1>
+        <p>Mỗi món trang sức là một câu chuyện chưa kể. Hãy để Aurora viết tiếp câu chuyện của bạn.</p>
+        <button>Khám Phá Ngay</button>
+    </div>
+</div>
+
+<!-- ==================== INTRO TEXT ==================== -->
+<section class="intro-section">
+    <div class="intro-container">
+        
+        <div class="intro-image">
+            <img src="intro.jpeg" alt="Giới thiệu Aurora">
+            <div class="est-tag">EST. 1988</div>
+        </div>
+
+        <div class="intro-text">
+            <h1>Về chúng tôi</h1>
+            <p>Aurora là thương hiệu trang sức được tạo nên từ cảm hứng của những dải ánh sáng rực rỡ nơi cực quang – đẹp, độc đáo và không bao giờ lặp lại. Chúng tôi tin rằng mỗi người đều mang trong mình một bản sắc riêng, một vẻ đẹp chỉ thuộc về chính họ.</p>
+            <p>Với khẩu hiệu “Shine on your own way”, Aurora mong muốn mỗi thiết kế không chỉ là một món trang sức, mà còn là biểu tượng của sự tự tin, bản lĩnh và phong cách cá nhân. Từng đường nét đều được chế tác tỉ mỉ, kết hợp giữa sự tinh tế hiện đại và sự sang trọng vượt thời gian, giúp bạn tỏa sáng theo cách của chính mình – không theo khuôn mẫu, không cần so sánh.</p>
+            <p>Aurora – nơi ánh sáng chạm đến vẻ đẹp bên trong bạn.</p>
+
+            <a href="#" class="intro-link">Đọc câu chuyện của Aurora</a>
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- ==================== COLLECTION VIDEO ==================== -->
+<section class="collection-new">
+    <div class="collection-left">
+        <div class="video-frame">
+            <video autoplay muted loop id="video2">
+                <source src="video-doc.mp4" type="video/mp4">
+            </video>
+
+            <div class="sound-btn" id="btn2">
+                <i class="fa-solid fa-volume-xmark"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="collection-right">
+        <h4>NEW COLLECTION</h4>
+        <h2>Golden Whisper</h2>
+        <p>
+            Lấy cảm hứng từ ánh vàng mềm mại và những đường cong tinh xảo, bộ sưu tập Golden Whisper mang đến vẻ đẹp thanh lịch vượt thời gian. Mỗi thiết kế được chế tác tỉ mỉ, phản chiếu ánh sáng một cách tinh tế và quyến rũ.
+        </p>
+        <a href="#" class="view-more">Khám phá bộ sưu tập</a>
+    </div>
+</section>
+<!--WEDDING-->
+<section class="wedding-section" id="weddingSection">
+    <div class="wedding-grid">
+
+        <!-- ẢNH LỚN + TEXT -->
+        <div class="wedding-main">
+            <img src="wedding-banner.avif" alt="Wedding Banner">
+            <div class="wedding-overlay">
+                <h2>Mùa Hạnh Phúc</h2>
+                <p>Trao lời hẹn ước trăm năm với bộ sưu tập nhẫn cưới Eternity.</p>
+                <button class="btn-wedding">Xem Bộ Sưu Tập</button>
+            </div>
+        </div>
+
+        <!-- Ảnh top - right -->
+        <div class="wedding-img"><img src="ring1.webp" alt=""></div>
+        <div class="wedding-img"><img src="ring2.jpg" alt=""></div>
+
+        <!-- Ảnh bottom-left -->
+        <div class="wedding-img"><img src="ring3.jpg" alt=""></div>
+
+        <!-- Text Tư Vấn -->
+        <div class="wedding-consult">
+            <h3>Đặt Lịch Tư Vấn</h3>
+            <p>Tư vấn 1:1 tại phòng VIP</p>
+            <a href="#">Đặt ngay →</a>
+        </div>
+
+    </div>
+</section>
+<audio id="weddingMusic">
+    <source src="wedding.mp3" type="audio/mp3">
+</audio>
+
+<!-- SLIDER -->
+<section class="product-section fade">
+    <h2>SẢN PHẨM NỔI BẬT</h2>
+
+    <div class="slider" id="slider">
+        <div class="product">
+            <img src="sp1.jpg">
+            <h4>Vòng cổ Aurora</h4>
+            <span>12.500.000₫</span>
+        </div>
+
+        <div class="product">
+            <img src="sp2.png">
+            <h4>Nhẫn Golden Whisper</h4>
+            <span>8.900.000₫</span>
+        </div>
+
+        <div class="product">
+            <img src="sp3.jpg">
+            <h4>Hoa tai Crystal Bloom</h4>
+            <span>6.500.000₫</span>
+        </div>
+
+        <div class="product">
+            <img src="sp4.jpg">
+            <h4>Lắc tay Pure Shine</h4>
+            <span>9.200.000₫</span>
+        </div>
+
+        <div class="product">
+            <img src="sp5.png">
+            <h4>Vòng charm Elegant</h4>
+            <span>7.800.000₫</span>
+        </div>
+    </div>
+    <a href="#" class="view-all-btn">Xem tất cả sản phẩm</a>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-col">
+        <h4>Aurora Jewelry</h4>
+        <p>Thương hiệu trang sức cao cấp theo phong cách tối giản — thanh lịch và bền vững.</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Về chúng tôi</h4>
+        <p><i class="fa-solid fa-building"></i> Thành lập: 2023</p>
+        <p><i class="fa-solid fa-gem"></i> Chất liệu: Vàng 18K, kim cương, đá quý</p>
+        <p><i class="fa-solid fa-handshake"></i> Cam kết dịch vụ & bảo hành</p>
+    </div>
+
+    <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <a href="tel:0909888999"><i class="fa-solid fa-phone"></i> 0909 888 999</a>
+        <a href="mailto:contact@aurora.com"><i class="fa-solid fa-envelope"></i> contact@aurora.com</a>
+        <a><i class="fa-solid fa-location-dot"></i> Hà Nội – Việt Nam</a>
+    </div>
+
+    <div class="footer-col">
+        <h4>Mạng xã hội</h4>
+        <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fa-brands fa-tiktok"></i> Tiktok</a>
+    </div>
+</footer>
+
+<!-- ==================== JS ==================== -->
+<script>
+    /* INTRO SKIP */
+    const intro = document.getElementById("intro");
+    const introVideo = document.getElementById("introVideo");
+    const skipBtn = document.getElementById("skipIntro");
+
+    skipBtn.onclick = () => intro.style.display = "none";
+    introVideo.addEventListener("ended", () => intro.style.display = "none");
+
+    /* SOUND VIDEO DOC */
+    const v2 = document.getElementById("video2");
+    const b2 = document.getElementById("btn2");
+
+    b2.onclick = () => {
+        v2.muted = !v2.muted;
+        b2.innerHTML = v2.muted
+            ? '<i class="fa-solid fa-volume-xmark"></i>'
+            : '<i class="fa-solid fa-volume-high"></i>';
+    };
+
+    const introSoundBtn = document.getElementById("introSoundBtn");
+    introSoundBtn.onclick = () => {
+        introVideo.muted = !introVideo.muted;
+        introSoundBtn.innerHTML = introVideo.muted
+            ? '<i class="fa-solid fa-volume-xmark"></i>'
+            : '<i class="fa-solid fa-volume-high"></i>';
+    };
+    const header = document.querySelector("header");
+    const heroSection = document.querySelector(".hero");
+
+    window.addEventListener("scroll", () => {
+        const heroHeight = heroSection.offsetHeight;
+
+        if (window.scrollY > heroHeight - 80) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    });
+    const weddingSection = document.getElementById("weddingSection");
+    const weddingMusic = document.getElementById("weddingMusic");
+
+    weddingMusic.volume = 0.6; // âm lượng vừa phải
+
+    let playing = false;
+
+    function checkWeddingMusic() {
+        const rect = weddingSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Khi phần wedding lọt vào 40% chiều cao màn hình
+        const isVisible = rect.top < windowHeight * 0.6 && rect.bottom > windowHeight * 0.4;
+
+        if (isVisible && !playing) {
+            weddingMusic.play().catch(err => console.log("Chặn autoplay:", err));
+            playing = true;
+        }
+
+        // Khi rời khỏi khu vực wedding → tắt nhạc
+        if (!isVisible && playing) {
+            weddingMusic.pause();
+            weddingMusic.currentTime = 0;
+            playing = false;
+        }
+    }
+
+    window.addEventListener("scroll", checkWeddingMusic);
+</script>
+
+
+</body>
+</html>
